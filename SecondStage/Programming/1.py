@@ -33,54 +33,49 @@ for key, item in zip(d.keys(), d.values()):
         temp_arr[0].append(real_x)
         temp_arr[1].append(real_y)
 
-    d_new[key] = [round(sum(temp_arr[0])/len(temp_arr[0])), round(sum(temp_arr[1])/len(temp_arr[1]))]        
-        
+    d_new[key] = [round(sum(temp_arr[0])/len(temp_arr[0])), round(sum(temp_arr[1])/len(temp_arr[1]))]
+
+
+
+#---------------------------------------------------  
+#print(d[8])    
+#if d[8]!=[[184.0, 318.0, 6.045, 77.506, 19.921], [14.0, 30.0, 10.021, 72.915, 19.778], [289.0, 205.0, 0.408, 80.725, 21.237], [567.0, 208.0, -4.549, 74.998, 11.178]]:
+    #raise Exception(d_new)
 x_0 = [[],[]]
 x_1 = [[],[]]
 x_2 = [[],[]]
-max_x = -11111
-min_x = 1000000
-max_y = -11111
-min_y = 1000000
-for key, item in zip(d_new.keys(), d_new.values()):
-    if item[0] > max_x:
-        max_x = item[0]
-    if item[1] > max_y:
-        max_y = item[1]
-    if item[0] < min_x:
-        min_x = item[0]
-    if item[1] < min_y:
-        min_y = item[1]
+x_x = [[[],[]],[[],[]],[[],[]]]
+sorted_ = sorted(d_new.items(), key=lambda kv: kv[1])
+counter = 0
+count = 0
+for i in range(len(sorted_)):
+    if count < 4:
+        x_x[counter][0].append(sorted_[i][0])
+        x_x[counter][1].append(sorted_[i][1][1])
+    count += 1
+    if count > 3:
+        count = 0
+        counter += 1
 
-thr_x = (max_x + min_x + 2)/3
-#thr_y = (max_y + max_y + 2)/4
+#print(x_x)
+for i in range(len(x_x)):
+    x_x[i][0] = [x for _, x in sorted(zip(x_x[i][1],x_x[i][0]), key=lambda pair: pair[0])]
+#print(x_x)
+res[0][0] = x_x[0][0][3]
+res[1][0] = x_x[0][0][2]
+res[2][0] = x_x[0][0][1]
+res[3][0] = x_x[0][0][0]
 
-for key, item in zip(d_new.keys(), d_new.values()):
-    if item[0] < thr_x:
-        x_0[0].append(key)
-        x_0[1].append(item[1])
-    if item[0] < thr_x*2 and item[0] > thr_x:
-        x_1[0].append(key)
-        x_1[1].append(item[1])
-    if item[0] < thr_x*3 and item[0] > thr_x*2:
-        x_2[0].append(key)
-        x_2[1].append(item[1])
+res[0][1] = x_x[1][0][3]
+res[1][1] = x_x[1][0][2]
+res[2][1] = x_x[1][0][1]
+res[3][1] = x_x[1][0][0]
 
-res[0][0] = x_0[0][x_0[1].index(max(x_0[1]))]
-res[3][0] = x_0[0][x_0[1].index(min(x_0[1]))]
-res[1][0] = x_0[0][x_0[1].index(max(x_0[1][1:3]))]
-res[2][0] = x_0[0][x_0[1].index(min(x_0[1][1:3]))]
+res[0][2] = x_x[2][0][3]
+res[1][2] = x_x[2][0][2]
+res[2][2] = x_x[2][0][1]
+res[3][2] = x_x[2][0][0]
 
-res[0][1] = x_1[0][x_1[1].index(max(x_1[1]))]
-res[3][1] = x_1[0][x_1[1].index(min(x_1[1]))]
-res[1][1] = x_1[0][x_1[1].index(max(x_1[1][1:3]))]
-res[2][1] = x_1[0][x_1[1].index(min(x_1[1][1:3]))]
-
-res[0][2] = x_2[0][x_2[1].index(max(x_2[1]))]
-res[3][2] = x_2[0][x_2[1].index(min(x_2[1]))]
-res[1][2] = x_2[0][x_2[1].index(max(x_2[1][1:3]))]
-res[2][2] = x_2[0][x_2[1].index(min(x_2[1][1:3]))]
-
-
+#---------------------------------------------------
 for i in res:
     print(*i)
