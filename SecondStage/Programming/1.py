@@ -1,6 +1,7 @@
 n = int(input())
 
 d = dict()
+res = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
 for _ in range(n):
     num, x_ice, y_ice, x_drone, y_drone, height = map(float, input().split())
@@ -9,4 +10,5 @@ for _ in range(n):
     except:
         d[num] = [[x_ice, y_ice, x_drone, y_drone, height]]
 
-print(d)
+for i in res:
+    print(*i)
