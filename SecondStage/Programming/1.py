@@ -1,42 +1,35 @@
+import numpy as np
 n = int(input())
 
-d = dict()
+d = []
 res = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
 d_new = dict()
+
 for _ in range(n):
     num, x_ice, y_ice, x_drone, y_drone, height = map(float, input().split())
-    try:
-        d[int(num)] += [[x_ice, y_ice, x_drone, y_drone, height]]
-    except:
-        d[int(num)] = [[x_ice, y_ice, x_drone, y_drone, height]]
+    d.append([num, x_ice, y_ice, x_drone, y_drone, height])
 
-def size(height):
-    x = (4*height)/3
-    y = (3*height)/3
+
+def size(height, x_in_pixels, y_in_pixels):
+    how_much_distance_in_one_pixel = 0.004/640
+    x = (how_much_distance_in_one_pixel*(x_in_pixels-320)*(height-4))/0.003
+    y = (how_much_distance_in_one_pixel*(240-y_in_pixels)*(height-4))/0.003
     return x, y
 
-for key, item in zip(d.keys(), d.values()):
+coords = []
+for i in range(len(d)):
     temp_arr = [[], []]
-    for i in range(len(item)):
-        x, y = size(item[i][-1])
-        
-        r_x = item[i][0] * x / 640
-        r_y = item[i][1] * y / 480
-        if item[i][0] >= 320:
-            real_x = item[i][2] + (r_x-(x/2))
-        else:
-            real_x = item[i][2] - ((x/2)-r_x)
-        if item[i][1] >= 240:
-            real_y = item[i][3] - ((y/2)-r_y)
-        else:
-            real_y = item[i][3] + (r_y-(y/2))
-        
-        temp_arr[0].append(real_x)
-        temp_arr[1].append(real_y)
-
-    d_new[key] = [sum(temp_arr[0])/len(temp_arr[0]), sum(temp_arr[1])/len(temp_arr[1])]
-
-
+    x, y = size(d[i][-1], d[i][1], d[i][2])
+    # try:
+    #     d_new[i] += [temp_arr[0], temp_arr[1]]#[np.median(temp_arr[0]), np.median(temp_arr[1])]
+    # except:
+    #     d_new[] = [temp_arr[0], temp_arr[1]]
+    # coords.append([x+d[i][3], y+d[i][4]])
+    try:
+        d_new[int(d[i][0])] += [x+d[i][3], y+d[i][4]]#[np.median(temp_arr[0]), np.median(temp_arr[1])]
+    except:
+        d_new[int(d[i][0])] = [x+d[i][3], y+d[i][4]]
+#print(d_new)
 
 x_x = [[[],[]],[[],[]],[[],[]]]
 
@@ -44,7 +37,7 @@ sorted_ = sorted(d_new.items(), key=lambda kv: kv[1])
 
 counter = 0
 count = 0
-
+print(sorted_)
 for i in range(len(sorted_)):
     if count < 4:
         x_x[counter][0].append(sorted_[i][0])
