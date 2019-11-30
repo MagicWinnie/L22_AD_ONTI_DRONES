@@ -1,4 +1,5 @@
 import numpy as np
+
 n = int(input())
 
 d = []
@@ -20,16 +21,10 @@ coords = []
 for i in range(len(d)):
     temp_arr = [[], []]
     x, y = size(d[i][-1], d[i][1], d[i][2])
-    # try:
-    #     d_new[i] += [temp_arr[0], temp_arr[1]]#[np.median(temp_arr[0]), np.median(temp_arr[1])]
-    # except:
-    #     d_new[] = [temp_arr[0], temp_arr[1]]
-    # coords.append([x+d[i][3], y+d[i][4]])
-    try:
-        d_new[int(d[i][0])] += [x+d[i][3], y+d[i][4]]#[np.median(temp_arr[0]), np.median(temp_arr[1])]
-    except:
+    if d_new.get(int(d[i][0]), False):
+        d_new[int(d[i][0])] += [x+d[i][3], y+d[i][4]]
+    else:
         d_new[int(d[i][0])] = [x+d[i][3], y+d[i][4]]
-#print(d_new)
 
 x_x = [[[],[]],[[],[]],[[],[]]]
 
@@ -37,7 +32,6 @@ sorted_ = sorted(d_new.items(), key=lambda kv: kv[1])
 
 counter = 0
 count = 0
-print(sorted_)
 for i in range(len(sorted_)):
     if count < 4:
         x_x[counter][0].append(sorted_[i][0])
@@ -53,7 +47,6 @@ for i in range(len(x_x)):
 for i in range(3):
     for j in range(4):
         res[j][i] = x_x[i][0][3-j]
-
 
 for i in res:
     print(*i)
