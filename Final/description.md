@@ -7,4 +7,4 @@
 <img src="assets/algorithm_1.png">
 <img src="assets/algorithm_2.png">
 ### Код
-Код для квадрокоптера, написанный на языке Python, [находится на GitHub]("main_with_comments.py").
+Код для квадрокоптера, написанный на языке Python, [находится на GitHub](main_with_comments.py).
